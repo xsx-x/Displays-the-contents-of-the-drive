@@ -424,9 +424,13 @@
             items.sort((a, b) => {
                 const aIsDir = (a.type === "folder" || a.type === "תיקיה");
                 const bIsDir = (b.type === "folder" || b.type === "תיקיה");
+                
+                // תמיד לשים תיקיות לפני קבצים
                 if (aIsDir && !bIsDir) return -1;
                 if (!aIsDir && bIsDir) return 1;
-                return a.name.localeCompare(b.name);
+                
+                // מיון חכם שמבין מספרים (כך ש-2 בא לפני 10)
+                return a.name.localeCompare(b.name, 'he', { numeric: true, sensitivity: 'base' });
             });
 
             let htmlBuilder = '';
